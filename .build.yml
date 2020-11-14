@@ -1,0 +1,23 @@
+image: alpine/edge
+packages:
+  - rsync
+  - go
+  - hugo
+sources:
+  - https://git.sr.ht/~timmydo/timmydouglas.com
+secrets:
+  - 2b374c01-c3bb-499e-b4a2-1cc9cdb76868
+triggers:
+  - action: email
+    condition: always
+    to: Timmy Douglas <mail@timmydouglas.com>
+tasks:
+- build: |
+    cd timmydouglas.com
+    hugo
+- upload: |
+    cd timmydouglas.com
+    echo "StrictHostKeyChecking=no" >> ~/.ssh/config
+    rsync -rP public/ deploy@timmydouglas.com:/var/www/timmydouglas.com/
+    rsync -rP public/gemini/ deploy@timmydouglas.com:/srv/gemini/timmydouglas.com/
+    rsync -rP public/blog/gemini.xml deploy@timmydouglas.com:/srv/gemini/timmydouglas.com/feed.xml
