@@ -1,0 +1,21 @@
+{{ partial "head.html" . }}
+
+<h1>{{$.Title}}</h1>
+<h5><span class="date">{{.Date.Format "January 2, 2006"}}</span></h5>
+
+<main>
+  <article>
+    {{.Content}}
+  </article>
+</main>
+
+<section class="comment">
+  {{ with .OutputFormats.Get "gemtext" }}
+  <p>
+  ⇒ This article is also available <a href="{{replace .Permalink "/gemini" "" 1 | safeURL}}">on gemini</a>.
+  {{ end }}
+
+  <p>
+</section>
+
+{{ partial "foot.html" }}

@@ -1,0 +1,28 @@
+{{ partial "head.html" . }}
+
+<main class="index">
+  <section class="article-list">
+    <h1>{{$.Title}}</h1>
+
+    {{ range (where .Site.RegularPages "Section" "post") }}
+    <div class="article">
+      <span class="date">{{.Date.Format "January 2, 2006"}}</span>
+      {{- if .OutputFormats.Get "html" }}
+      <a href="{{.Permalink}}">{{.Title}}</a>
+      {{- else if .OutputFormats.Get "gemtext" }}
+      {{ with .OutputFormats.Get "gemtext" }}
+      <a href="{{replace .Permalink "/gemini" "" 1 | safeURL}}">{{end}}{{.Title}}</a>
+      <small>[<a href="/gemini.html">what is gemini://?</a>]</small>
+      {{ end }}
+    </div>
+    {{ end }}
+  </section>
+
+  <aside>
+    <div class="text-center">
+      <a class="rss" href="/post/index.xml">rss</a>
+      ·
+      <a href="gemini://timmydouglas.com">gemini</a>
+    </div>
+  </aside>
+</main>
