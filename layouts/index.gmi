@@ -1,0 +1,6 @@
+# Timmy Douglas's Blog
+
+{{ range (where .Site.RegularPages "Section" "post") }}
+=> {{replace .Permalink "/gemini" "" 1 | safeURL}} {{.Date.Format "2006-01-02"}} {{.Title}}
+{{ end }}
+
