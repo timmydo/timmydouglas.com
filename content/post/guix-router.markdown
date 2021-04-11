@@ -30,7 +30,7 @@ Here are some features I find to be important in a home router:
 
 - IPv6 support: it's 2021 already.
 
-- dhcpd: support giving out IPv4 addresses. radvd to help
+- dhcpd: support giving out IPv4 addresses. NetworkManager to help
   machines obtain IPv6 addresses
 
 - Unattended security updates: you shouldn't have to go to some vendor
@@ -343,8 +343,7 @@ from another post.
 ```
 
 This sets up dhcpd.conf. Nothing special here besides my random
-internal LAN IP addresses. Note I have not had a chance to set up
-radvd yet. So internal clients are not creating IPv6 addresses `:(`
+internal LAN IP addresses.
 
 
 ```scheme
@@ -414,9 +413,6 @@ forwarding here.
 	    (service network-manager-service-type)
 	    (simple-service '%my-nftables-ruleset etc-service-type (list `("nftables.conf" ,%my-nftables-ruleset)))
 	    (simple-service '%corefile etc-service-type (list `("Corefile" ,%corefile)))
-	    (service sysctl-service-type
-		     (sysctl-configuration
-		      (settings '(("net.ipv4.ip_forward" . "1")))))
 	    (service dhcpd-service-type
 		     (dhcpd-configuration
 		      (config-file %my-dhcpd-config)
@@ -450,7 +446,5 @@ forwarding here.
              (device (uuid "BA8F-DDF3" 'fat32))
              (type "vfat"))
            %base-file-systems)))
-
 ```
 
-I'll try to do an update when I have `radvd` (IPv6) working.
