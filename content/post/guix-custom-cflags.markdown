@@ -7,7 +7,7 @@ tags:
 title: "GNU Guix: Building packages with custom CFLAGS"
 ---
 
-In a previous [post](2021/02/07/guix-router.html), I discussed how to
+In a previous [post](/2021/02/07/guix-router.html), I discussed how to
 set up a custom channel. I currently have one hosted
 [here](https://github.com/timmydo/guix-channel). I'm using that in
 this post where I use guix on a foreign distribution. I have
