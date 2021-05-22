@@ -5,7 +5,7 @@ tags:
 title: "Effective C"
 ---
 
-I recently bought a book called [Effective C: An intorudction to
+I recently bought a book called [Effective C: An introduction to
 Professional C Programming](https://nostarch.com/Effective_C) by
 Robert Seacord. I haven't done any C programming in the last 15 years,
 so I thought it would be a good refresher. I want to find a hobby
