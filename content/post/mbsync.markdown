@@ -82,6 +82,7 @@ Host your.imap.server.name
 User you@yourdomain.com
 PassCmd "gpg -dq ~/.password-store/tuffmail.gpg"
 SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 Channel mydomain-channel
 Far :mydomain-remote:
