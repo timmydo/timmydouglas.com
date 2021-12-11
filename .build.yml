@@ -19,5 +19,3 @@ tasks:
     cd timmydouglas.com
     echo "StrictHostKeyChecking=no" >> ~/.ssh/config
     rsync -rP public/ deploy@timmydouglas.com:/var/www/timmydouglas.com/
-    rsync -rP public/gemini/ deploy@timmydouglas.com:/srv/gemini/timmydouglas.com/
-    rsync -rP public/post/gemini.xml deploy@timmydouglas.com:/srv/gemini/timmydouglas.com/feed.xml

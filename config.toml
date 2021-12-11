@@ -14,27 +14,10 @@ unsafe = true
 ordered = true
 
 [mediaTypes]
-[mediaTypes."text/gemini"]
-suffixes = ["gmi"]
 
 [outputFormats]
-[outputFormats.Gemini]
-name = "GEMTEXT"
-isPlainText = true
-isHTML = false
-mediaType = "text/gemini"
-protocol = "gemini://"
-permalinkable = true
-path = "gemini/"
-
-[outputFormats.GEMRSS]
-name = "GEMRSS"
-isHTML = false
-mediaType = "application/rss+xml"
-protocol = "gemini://"
-path = "gemini/"
 
 [outputs]
-section = ["HTML", "RSS", "GEMRSS"]
-page = ["HTML", "GEMTEXT"]
-home = ["HTML", "GEMTEXT"]
+section = ["HTML", "RSS"]
+page = ["HTML"]
+home = ["HTML"]

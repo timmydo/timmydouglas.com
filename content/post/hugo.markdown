@@ -26,10 +26,6 @@ main driving factors were:
     magic/code generation. It was easy enough to [copy another site's
     code](https://git.sr.ht/~sircmpwn/drewdevault.com).
 	
-  - I want a migration path towards serving a gemini site in the
-    future. (This ties into the first bullet point about complicated
-    web browsers)
-	
   - I wanted to be able to self-host this blog fairly
     easily. Basically have a git CD scirpt that runs hugo and uploads
     the output to a web server I control. GitHub pages works great and
