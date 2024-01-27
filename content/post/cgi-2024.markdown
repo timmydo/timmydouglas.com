@@ -1,0 +1,136 @@
+---
+date: 2024-01-27
+tags:
+- cgi
+- apache
+- hare
+title: "CGI in 2024"
+---
+
+CGI (Common Gateway Interface) was one of the first methods for
+serving dynamic content from web servers. When the web server gets a
+request to a CGI executable, it would invoke the executable and pass
+information about the request in environment variables and over
+standard input. The web page content would be printed over standard
+output and fed back to the user by the web server.
+
+CGI feels like a very "unix-y" sort of design, but unfortunately it
+fell out of favor as more people started to use programming languages
+that were not precompiled or involved a higher startup/warmup cost
+(creating database connections, etc). To combat that, technologies
+such as FastCGI and SCGI were developed, which could be re-used for
+multiple requests. Inevitably, programming languages started
+implementing their own web servers and everything could be controlled
+in your application's code.
+
+One of the cool things about using processes is that you can write
+your code in a low level language and rely on system process cleanup
+to free the resources you allocate instead of worrying about memory
+leaks like you would in paradigms where your application stays alive
+for multiple requests. To handle database connection pooling more
+gracefully, you might look at something like PgBouncer, which allows
+you to pool connections while running a proxy agent on the local
+machine. [Hare](https://harelang.org/) was my programming language of
+choice here as it's a fairly simple and safe systems language that has
+no external dependencies (ldd says "not a dynamic executable") and no
+garbage collection. Startup time is less than a millisecond.
+
+Anyways, here is how I set up a fairly minimal Apache httpd which runs
+a Hare "Hello World" program. Based on the logs, I was generally
+seeing less than a 1 millisecond serve time for a Hare program through
+CGI and about 12ms serve time for running a Python3 hello
+program. Here is everything so that future me knows how to set it up
+again:
+
+```
+> find . -type f
+./htdocs/index.html (static file)
+./etc/httpd/httpd.conf (config, also run mkdir -p logs)
+./cgi-bin/hello (compiled binary)
+```
+
+etc/http.conf:
+
+```
+ServerRoot "/home/timmy/src/hare-cgi"
+ServerName localhost
+Listen 8080
+LimitRequestBody 102400 
+
+LoadModule authz_host_module modules/mod_authz_host.so
+LoadModule authz_core_module modules/mod_authz_core.so
+LoadModule env_module modules/mod_env.so
+LoadModule unixd_module modules/mod_unixd.so
+LoadModule dir_module modules/mod_dir.so
+LoadModule alias_module modules/mod_alias.so
+LoadModule log_config_module modules/mod_log_config.so
+LoadModule cgid_module modules/mod_cgid.so
+
+User timmy
+DocumentRoot "/home/timmy/src/hare-cgi/htdocs"
+DirectoryIndex index.html
+ErrorLog "logs/error_log"
+LogLevel warn
+LogFormat "%h %l %u %t \"%r\" %>s %b %D" common
+CustomLog "logs/access_log" common
+ScriptAlias /cgi-bin/ "/home/timmy/src/hare-cgi/cgi-bin/"
+
+<Directory />
+    AllowOverride none
+    Require all denied
+</Directory>
+
+<Directory "/home/timmy/src/hare-cgi/htdocs">
+    AllowOverride None
+    Require all granted
+</Directory>
+
+<Directory "/home/timmy/src/hare-cgi/cgi-bin">
+    AllowOverride None
+    Options None
+    Require all granted
+</Directory>
+```
+
+cmd/hello/main.ha:
+
+```
+use fmt;
+use io;
+use os;
+use strings;
+
+fn serve(in: str) void = {
+	fmt::println("Content-type: text/plain")!;
+	fmt::println("")!;
+	let uri = os::getenv("REQUEST_URI");
+	let qs = os::getenv("QUERY_STRING");
+	let accept = os::getenv("HTTP_ACCEPT");
+	let method = os::getenv("REQUEST_METHOD");
+	fmt::println("uri=", uri)!;
+	fmt::println("q=", qs)!;
+	fmt::println("method=", method)!;
+	fmt::println("accept=", accept)!;
+	
+	fmt::println("in:")!;
+	fmt::println(in)!;
+	
+};
+
+export fn main() void = {
+	let buf = io::drain(os::stdin)!;
+	serve(strings::fromutf8(buf)!);
+};
+
+```
+
+The modules:
+
+```
+$ ls -ld modules
+lrwxrwxrwx 1 timmy users     64 Jan 24 21:56 modules ->
+/gnu/store/ijw3qrgxvfvi40y1vxysdazn983qxrh2-httpd-2.4.58/modules
+``
+
+Start the web server with: `httpd -d $(pwd) -DFOREGROUND`
+
