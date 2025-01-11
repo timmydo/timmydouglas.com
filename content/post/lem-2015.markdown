@@ -1,0 +1,85 @@
+---
+date: 2025-01-11
+tags:
+- lem
+- guile-emacs
+title: "Lem and Guile-Emacs"
+---
+
+A was recently inspired by a talk at [emacsconf 2024 about
+guile-emacs](https://emacsconf.org/2024/talks/guile/). Rewriting emacs
+in another lisp language is a topic as old as the editor itself. Many
+view emacs lisp as a compromised language, put at a further
+disadvantage that the emacs editor is the only implementation and
+program written in it.
+
+So how could emacs be "modernized"? Well, short of rewriting the whole
+thing and all the extension code, it would come down to providing
+another implementation of emacs lisp. Guile-Emacs takes the approach
+of running emacs lisp on guile. I think this is probably the only
+approach that could work politically, given that RMS does not seem to
+be a fan of common lisp. Guile is a long time GNU project, so it very
+much fits the bill.
+
+I gave guile-emacs a spin a couple of weeks ago and was pleasantly
+surprised that I was able to get it working on my machine. [I shared
+more info on how I got it working
+here](https://lists.hcoop.net/pipermail/guile-emacs-devel/2025-January/000005.html). It
+was actually not too much work to patch guile-emacs so that the pgtk
+code could work. I found the emacs C code is fairly easy to navigate,
+but I had to look at the git history to find patterns on how to
+migrate things. Thankfully the pgtk stuff followed a similar pattern,
+but when it came to debugging crashes and scheme code, I wasn't really
+sure what to do.
+
+The upsides to the guile-emacs project is that a lot of C code
+specific to emacs lisp as a language can be removed. I noticed the GC
+was replaced with BDWGC and optimizations like native comp are removed
+because they would be taken care of by guile. Unfortunately, at this
+time, it is adding a dependency without taking away the C
+dependency. I think some would bemoan the fact that Guile doesn't
+support as many platforms as well. The project still has a huge amount
+of work to do to reach feature parity with regular emacs. That's not
+to mention the lukewarm reception the project originally received a
+decade ago when it was started. I have a hard time seeing how the
+guile-emacs project can replace all the C code with guile and regular
+FFI calls in the near future, considering the project had a
+decade long gap in development.
+
+
+So you may think, is Emacs' language technical debt insurmountable? It
+does seem to be chugging along fine, but I think it's only human to
+think about whether it would succeed more if you could separate the
+programming language from the rest of the environment. In the end, is
+the emacs programming language worth much 40 years later?
+
+
+On that note, the other point of consideration is a rewrite in common
+lisp. I previously wrote about Lem on this blog when talking about
+common lisp environments. I last used Lem about almost 1.5 years
+ago. At the time, I was able to do a little work to get it running
+under SDL2 on my machine. The difficulty was that Lem was using
+threading primitives at its core and SDL2 (as well as other UI
+frameworks) want all the operations performed on a single thread. When
+I looked, it didn't seem like Lem was designed this way, so I was a
+little discouraged, and the experience was still too buggy for me to
+use the editor for anything serious.
+
+Fast forward a year. Lem is packaged in Guix and looks pretty slick
+out of the box. The project's development seems to be going strong
+(thanks to
+[cxxxr](https://github.com/lem-project/lem/graphs/contributors)). You
+can open a repl to the editor itself or start an inferior lisp. It
+encouraged me to hack on my [notmuch
+implementation](https://git.sr.ht/~timmydo/lem-notmuch/tree) that I
+started last time I looked at lem but then forgot about. If I had some
+more free time to work on it, I could probably migrate my email
+workflows to Lem.
+
+I think at the rate things are going, lem has a brighter future than
+guile-emacs. There is a strong contributor and I think the community
+is more aligned on getting a working product delivered than maintaining
+a status quo. Hopefully Lem can find a way to grow their
+extension ecosystem so that it can rival emacs. Then things
+will get interesting.
+
