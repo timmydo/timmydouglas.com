@@ -53,5 +53,8 @@ was sort of sad to hear the whole thing and to think about the next
 generation of kids potentially going through a similar experience
 rather than having human interactions. What a time to be alive.
 
+Update 2025-02-27: Andrej Karpathy dropped [a new
+video](https://www.youtube.com/watch?v=EWvNQjAaOHw) today. Another
+must watch.
 
 
