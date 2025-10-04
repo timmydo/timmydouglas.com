@@ -8,7 +8,7 @@ title: "Algorithms that Cause Democracy to Collapse"
 ---
 
 In a podcast I listened to yesterday,
-[https://youtu.be/AfYY9v0Q0X4?t=3062](Brian Eno describes) the how
+[Brian Eno describes](https://youtu.be/AfYY9v0Q0X4?t=3062) the how
 social media is causing the collapse of democracy. In some ways it feels
 inevitable--the capitalism operating system prioritizes making money,
 so the algorithm is optimized to maximize profits. To maximize
