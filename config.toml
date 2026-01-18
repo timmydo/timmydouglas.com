@@ -5,7 +5,7 @@ uglyurls = true
 disablePathToLower = true
 
 [permalinks]
-post = "/:year/:month/:day/:filename"
+post = "/:year/:month/:day/:contentbasename"
 
 [markup.goldmark.renderer]
 unsafe = true
