@@ -15,6 +15,10 @@ echo "--- Building site ---"
 (cd "$REPO_ROOT" && hugo --gc --minify)
 
 echo "--- Syncing to S3 ---"
+if ! aws sts get-caller-identity &>/dev/null; then
+    echo "AWS session expired, running 'aws sso login'..."
+    aws sso login
+fi
 aws s3 sync "$REPO_ROOT/public/" "s3://$BUCKET_NAME" \
     --region "$AWS_REGION" \
     --delete \
