@@ -1,0 +1,34 @@
+---
+date: 2026-03-19
+tags:
+- commodore 64
+title: "Commodore 64 Ultimate"
+---
+
+A couple of months ago, I stumbled upon some youtube videos praising
+the new [commodore 64 ultimate](https://www.commodore.net/). It's a
+FPGA recreation of the original hardware, with a bunch of convenience
+features on top. Probably an awesome addition to any retro computing
+enthusiast or someone that already knows they want a C64, but...
+
+
+I guess I learned the hard way that it wasn't really for me? I think
+my intro to PC computing was probably a decade after the C64
+released--so I'm thinking MS DOS/Windows 3.1 on a 386 or 486 with
+a turbo button. The C64 is more like 1MHz. Even the Oregon trail game
+that was made for C64 wasn't the one that I played when I was a kid,
+which was slightly disappointing.
+
+Other than some demo games that weren't too fun, I haven't tried much
+programming other than printing text or basic loops with the kids. I don't
+think this generation of kids is really impressed or curious with
+these old computers anymore. I can see why... It's probably too much
+to expect them to want to learn how to write BASIC on the old
+computer. On the plus side I guess it boots immediately and teleports
+you back to the days without user accounts or distractions. Maybe with
+the networking capability there may be some interesting telnet
+scenarios to give it more life.
+
+
+
+
