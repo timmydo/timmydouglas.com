@@ -4,6 +4,10 @@ pygmentsUseClasses = true
 uglyurls = true
 disablePathToLower = true
 
+[params.author]
+name  = "Timmy Douglas"
+email = "noreply@timmydouglas.com"
+
 [permalinks]
 post = "/:year/:month/:day/:contentbasename"
 
